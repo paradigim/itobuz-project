@@ -1,0 +1,66 @@
+
+.create-inv-container {
+    overflow: hidden;
+}
+.create-inv-container a {
+    display: inline-block;
+    float: right;
+    outline: none;
+}
+
+/* ---------------create-invoice css-------------- */
+.inner-container {
+    background: #f7f7f7;
+    padding: 20px;
+}
+.edit-form-control.form-control {
+    width: 50%;
+}
+.billed-from-to {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+}
+.billed-from, .billed-to {
+    width: 48%;
+    background: #fff;
+    padding: 15px;
+    border: 1px solid #ddd;
+}
+.billed-by-name {
+    font-weight: bold;
+    color: #000;
+}
+.all-product, .all-customers {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.each-product {
+    border: 1px solid #f1f1f1;
+    border-radius: 10px;
+    width: 48%;
+    margin-bottom: 15px;
+    padding: 10px;
+    box-shadow: 0 0 4px #8c8888;
+}
+.calc-block {
+    display: flex;
+}
+.item-details, .total-value-cont {
+    flex: 1;
+}
+.total-value-cont {
+    text-align: center;
+    margin-top: 100px;
+}
+.total-value {
+    text-align: center;
+}
+.total-val-title {
+    color: #000;
+}
+.amnt {
+    font-size: 30px;
+    font-weight: bold;
+}
