@@ -82,7 +82,6 @@ $(document).ready(function() {
     var totalCost=0, discountCost=0;
     $('#for-qty').on('input', function() {
         countQty = $(this).val();
-        console.log(countQty);
         totalCost = countQty * countRate;
         if(countDiscount !== 0) {
             discountCost = (countQty * countRate * countDiscount) / 100;
@@ -91,7 +90,6 @@ $(document).ready(function() {
     });
     $('#for-rate').on('input', function() {
         countRate = $(this).val();
-        console.log(countRate);
         totalCost = countQty * countRate;
         if(countDiscount !== 0) {
             discountCost = (countQty * countRate * countDiscount) / 100;
@@ -100,7 +98,6 @@ $(document).ready(function() {
     });
     $('#for-discount').on('input', function() {
         countDiscount = $(this).val();
-        console.log(countDiscount);
         totalCost = countQty * countRate;
         if(countDiscount !== 0) {
             discountCost = (countQty * countRate * countDiscount) / 100;
@@ -129,8 +126,6 @@ $(document).ready(function() {
         }
 
         axios.post('http://localhost:8000/api/invoices', apiData);
-
-        console.log(id, customer_id, discount, total, createdAt, updatedAt);
     });
 });
 
