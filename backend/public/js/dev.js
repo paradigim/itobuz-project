@@ -2,11 +2,13 @@
 
 
 $(document).ready(function() {
-    var datas, totalInvoices = 0;
+    var datas, 
+        totalInvoices = 0,
+        invoiceNo = 0;
 
 
-    function getProductData() {
-        axios.get('http://localhost:8000/api/products')
+    async function getProductData() {
+        await axios.get('http://localhost:8000/api/products')
             .then(response => {
                 datas = response.data;
                 datas.map(data => {
@@ -23,8 +25,8 @@ $(document).ready(function() {
     }
 
 
-    function getCustomerData() {
-        axios.get('http://localhost:8000/api/customers')
+    async function getCustomerData() {
+       await axios.get('http://localhost:8000/api/customers')
             .then(response => {
                 datas = response.data;
                 datas.map(data => {
@@ -42,18 +44,20 @@ $(document).ready(function() {
 
 
 
-    function getInvoiceData() {
-        axios.get('http://localhost:8000/api/customers')
+    async function getInvoiceData() {
+        await axios.get('http://localhost:8000/api/invoices')
             .then(response => {
                 datas = response.data;
-                totalInvoices = data.length;
+                totalInvoices = datas.length;
+                $('#invoice-no').val(totalInvoices + 1);
+                invoiceNo = $('#invoice-no').val();
                 // datas.map(data => {
                 //     $('.all-customers').append(`<div class='each-product'>
                 //         <div class='prd-id'>${data.name}</div>
                 //         <div class='prd-name'>$${data.price}</div>
                 //     </div>`);
                 // });
-                console.log(datas);
+                //console.log('invoice',datas);
             })
             .catch(error => {
                 console.log(error);
@@ -61,19 +65,18 @@ $(document).ready(function() {
     }
 
 
-
-
-    $(window).on('load', function() {
-        getProductData();
-        getCustomerData();
-        getInvoiceData();
+    $(window).on('load', async function() {
+        await getProductData();
+        await getCustomerData();
+        await getInvoiceData();
+        console.log('invoice into load:', invoiceNo);
     });
+    console.log('invoice outside load:', invoiceNo);
 
-
-    $('#invoice-no').val(totalInvoices + 1);
     
     var countQty=0, countRate=0, countDiscount=0;
     var totalCost=0, discountCost=0;
+    
     $('#for-qty').on('input', function() {
         countQty = $(this).val();
         console.log(countQty);
@@ -101,4 +104,11 @@ $(document).ready(function() {
         }
         $('.total-value').html(totalCost - discountCost);
     });
+    
+
+    // $('#formDatas').on('submit', function(e) {
+    //     e.preventDefault();
+
+    //     const id = invoiceNo;
+    // })
 });
