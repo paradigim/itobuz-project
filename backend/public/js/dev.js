@@ -1,4 +1,11 @@
-
+$(document).on('click', '.each-client', function() {
+    $('#client-name').val($(this).text());
+    $('#client-name').attr('data-id', $(this).data('id'));
+});
+$(document).on('click', '.each-prod', function() {
+    $('#item-name').val($(this).text());
+    $('#item-name').attr('data-id', $(this).data('id'));
+});
 
 
 $(document).ready(function() {
@@ -131,11 +138,3 @@ $(document).ready(function() {
 
 
 
-$(document).on('click', '.each-client', function() {
-    $('#client-name').val($(this).text());
-    $('#client-name').attr('data-id', $(this).data('id'));
-});
-$(document).on('click', '.each-prod', function() {
-    $('#item-name').val($(this).text());
-    $('#item-name').attr('data-id', $(this).data('id'));
-});
