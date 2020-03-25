@@ -16,6 +16,11 @@ $(document).ready(function() {
                         <div class='prd-id'>${data.name}</div>
                         <div class='prd-name'>$${data.price}</div>
                     </div>`);
+                    $('.product-listing').append(`
+                        <li class='each-prod' data-id=${data.id}>
+                            ${data.name}
+                        </li>
+                   `);
                 });
                 console.log(datas);
             })
@@ -24,9 +29,8 @@ $(document).ready(function() {
             });
     }
 
-
-    async function getCustomerData() {
-       await axios.get('http://localhost:8000/api/customers')
+    function getCustomerData() {
+       axios.get('http://localhost:8000/api/customers')
             .then(response => {
                 datas = response.data;
                 datas.map(data => {
@@ -34,6 +38,11 @@ $(document).ready(function() {
                         <div class='prd-id'>${data.name}</div>
                         <div class='prd-name'>$${data.price}</div>
                     </div>`);
+                    $('.client-listing').append(`
+                        <li class='each-client' data-id=${data.id}>
+                            ${data.name}
+                        </li>
+                   `);
                 });
                 console.log(datas);
             })
@@ -42,22 +51,20 @@ $(document).ready(function() {
             });
     }
 
-
-
-    async function getInvoiceData() {
-        await axios.get('http://localhost:8000/api/invoices')
+    function getInvoiceData() {
+        axios.get('http://localhost:8000/api/invoices')
             .then(response => {
                 datas = response.data;
                 totalInvoices = datas.length;
                 $('#invoice-no').val(totalInvoices + 1);
-                invoiceNo = $('#invoice-no').val();
-                // datas.map(data => {
-                //     $('.all-customers').append(`<div class='each-product'>
-                //         <div class='prd-id'>${data.name}</div>
-                //         <div class='prd-name'>$${data.price}</div>
-                //     </div>`);
-                // });
-                //console.log('invoice',datas);
+                datas.map(data => { 
+                    $('.all-invoices').append(`<div class='each-product'>
+                        <div class='prd-id'>$${data.total}</div>
+                        <div class='prd-name'>${data.createdAt}</div>
+                    </div>
+                `);
+                });
+                console.log('invoice',datas);
             })
             .catch(error => {
                 console.log(error);
@@ -65,18 +72,14 @@ $(document).ready(function() {
     }
 
 
-    $(window).on('load', async function() {
-        await getProductData();
-        await getCustomerData();
-        await getInvoiceData();
-        console.log('invoice into load:', invoiceNo);
+    $(window).on('load', function() {
+        getProductData();
+        getCustomerData();
+        getInvoiceData();
     });
-    console.log('invoice outside load:', invoiceNo);
 
-    
     var countQty=0, countRate=0, countDiscount=0;
     var totalCost=0, discountCost=0;
-    
     $('#for-qty').on('input', function() {
         countQty = $(this).val();
         console.log(countQty);
@@ -104,11 +107,40 @@ $(document).ready(function() {
         }
         $('.total-value').html(totalCost - discountCost);
     });
+
     
+    $('#formDatas').on('submit', function(e) {
+        e.preventDefault();
 
-    // $('#formDatas').on('submit', function(e) {
-    //     e.preventDefault();
+        var id = $('#invoice-no').val();
+        var customer_id = $('#client-name').data('id');
+        var discount = $('#for-discount').val();
+        var total = $('.total-value').html();
+        var createdAt = new Date().toDateString();
+        var updatedAt = new Date().toDateString();
 
-    //     const id = invoiceNo;
-    // })
+        var apiData =  {
+            id,
+            customer_id,
+            discount,
+            total,
+            createdAt,
+            updatedAt 
+        }
+
+        axios.post('http://localhost:8000/api/invoices', apiData);
+
+        console.log(id, customer_id, discount, total, createdAt, updatedAt);
+    });
+});
+
+
+
+$(document).on('click', '.each-client', function() {
+    $('#client-name').val($(this).text());
+    $('#client-name').attr('data-id', $(this).data('id'));
+});
+$(document).on('click', '.each-prod', function() {
+    $('#item-name').val($(this).text());
+    $('#item-name').attr('data-id', $(this).data('id'));
 });

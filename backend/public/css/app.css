@@ -6,6 +6,7 @@
     display: inline-block;
     float: right;
     outline: none;
+    padding-bottom: 50px;
 }
 
 /* ---------------create-invoice css-------------- */
@@ -31,7 +32,9 @@
     font-weight: bold;
     color: #000;
 }
-.all-product, .all-customers {
+.all-product, 
+.all-customers,
+.all-invoices {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -63,4 +66,37 @@
 .amnt {
     font-size: 30px;
     font-weight: bold;
+}
+.item-details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+/* .item-container {
+    border : 1px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 20px;
+    background: #fff;
+} */
+.clnt-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+il.client-listing {
+    list-style-type: none;
+}
+li.each-client,
+li.each-prod {
+    padding: 10px 20px;
+    text-transform: capitalize;
+    cursor: pointer;
+    display: block;
+}
+li.each-client:hover,
+li.each-prod:hover {
+    background: #f1f1f1;
+    transition: .2s;
 }
